@@ -37,11 +37,12 @@
           :key="item.id"
         >
           <td style="text-align: center">{{item.id}}</td>
-          <router-link tag="td" :to="'/grower/'+item.id" style="cursor: pointer">
-            <div>{{item.name}}</div>
-          </router-link>
-          <td>{{item.cpf}}</td>
-          <router-link tag="td" :to="'/properties/'+item.id" style="text-align: center"><i class="material-icons successIcon fakeButton">gps_fixed</i></router-link>
+          <td>{{item.name}}</td>
+          <td style="text-align: center">{{item.cpf}}</td>
+          <td style="text-align: center">
+            <router-link tag="i" :to="'/grower/'+item.id" class="material-icons successIcon fakeButton" style="margin-right: 8px">edit</router-link>
+            <router-link tag="i" :to="'/properties/'+item.id" class="material-icons successIcon fakeButton">gps_fixed</router-link>
+          </td>
         </tr>
         <!-- <router-link
           :to="'/properties/'+item.id"
@@ -87,7 +88,7 @@ export default {
           cabecalho: [
             { id: 0, valor: "#", style: "text-align: center" },
             { id: 1, valor: "Nome", style: "" },
-            { id: 2, valor: "CPF", style: "" },
+            { id: 2, valor: "CPF", style: "text-align: center" },
             { id: 3, valor: "Propriedades", style: "text-align: center" },
           ]
           // conteúdo
@@ -152,6 +153,7 @@ export default {
       const { query, pagina, itensPagina } = this;
 
       this.$emit("loading", true);
+      this.$emit("consoleResponse", "https://my-json-server.typicode.com/pedroskakum/fake-api/grower" + this.query + "[GET]>")
       connector
         .interceptor(
           "https://my-json-server.typicode.com/pedroskakum/fake-api/grower" +
@@ -162,6 +164,7 @@ export default {
         .then(e => {
           this.itensArray = e;
           this.totalItens = e.length;
+          this.$emit("consoleResponse", "https://my-json-server.typicode.com/pedroskakum/fake-api/grower" + this.query + "[GET]>" + e);
           this.$emit("loading", false);
         });
     },

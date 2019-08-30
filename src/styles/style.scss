@@ -109,16 +109,17 @@ input, button {
   margin: auto;
   display: flex;
   height: 100vh;
+  width: 100vw;
 
   @include for-phone {
   }
   @include for-tablet {
   }
   @include for-desktop-small {
-    flex-direction: row;
+    flex-direction: column;
   }
   @include for-desktop {
-    flex-direction: row;
+    flex-direction: column;
   }
 }
 
@@ -191,6 +192,13 @@ input, button {
   @include for-desktop {
     width: 824px;
   }
+}
+
+#fetchResponses {
+    color: $cor-menu-ativo;
+    font-family: 'Courier New', Courier, monospace;
+    text-align: center;
+    padding: 20px;
 }
 
 // Utilitários
