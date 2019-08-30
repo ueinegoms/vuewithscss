@@ -47,6 +47,64 @@ body {
   align-items: center;
 }
 
+table {
+    border-collapse: collapse;
+    white-space: nowrap;
+    width: 100%;
+    margin-top: $padding-minimo;
+    margin-bottom: $padding-minimo;
+}
+
+th {
+    font-weight: bold;
+}
+
+th, td {
+    text-align: left;
+    padding: $padding-minimo;
+}
+
+tr:nth-child(even) {
+    background: #00000017;
+}
+tr{
+    transition: all 0.25s ease;
+    &:hover{
+        background: $cor-borda;
+        color: $cor-texto-forte;
+    }
+}
+
+input, button {
+    background: $cor-fundo;
+    height: 40px;
+    border-style: solid;
+    border-width: 1px;
+    border-color: $cor-borda;
+    border-radius: $padding-minimo;
+    padding: $padding-minimo;
+    color: $cor-texto-leve;
+
+    transition: all 0.25s ease;
+
+    &:focus{
+        color: $cor-texto-forte;
+        border-color: $cor-menu-ativo;
+        outline: none;
+    }
+
+    &:hover{
+        background: $cor-borda;
+    }
+}
+
+.borderRadiusL {
+    border-radius: $padding-minimo 0px 0px $padding-minimo;
+}
+.borderRadiusR {
+    border-radius: 0px $padding-minimo $padding-minimo 0px;
+}
+
 #app {
   margin: auto;
   display: flex;
@@ -138,4 +196,98 @@ body {
 // Utilitários
 .corForte {
     color: $cor-texto-forte;
+}
+.successIcon{
+    color: $cor-menu-ativo;
+}
+.contentVertical, #tabela {
+    display: flex;
+    flex-direction: column;
+}
+.contentHorizontal {
+    display: flex;
+    flex-direction: row;
+}
+
+.fakeButton{
+    cursor: pointer;
+    transition: all 0.25s ease;
+    &:hover{
+        // text-shadow: 0px 0px 8px 0px $cor-menu-ativo;
+        transform: scale(1.2) rotate(-90deg);
+    }
+}
+
+.modal-smooth, .modal, .modal-locked, .modal-smooth-locked {
+    /* margin: auto; */
+    overflow-y: scroll;
+    /* overflow:scroll; */
+    -webkit-overflow-scrolling: touch;
+    position: fixed;
+    z-index: 250;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 100%;
+    height: 0%;
+    top: 50%;
+    left: 0px;
+    -webkit-transition: all 0.75s cubic-bezier(0.0, 0.0, 0.2, 1);
+    -moz-transition: all 0.75s cubic-bezier(0.0, 0.0, 0.2, 1);
+    -o-transition: all 0.75s cubic-bezier(0.0, 0.0, 0.2, 1);
+    -ms-transition: all 0.75s cubic-bezier(0.0, 0.0, 0.2, 1);
+    transition: all 0.75s cubic-bezier(0.0, 0.0, 0.2, 1);
+}
+
+.modal-smooth:before, .modal-smooth-locked:before {
+    content: "";
+    opacity: 0.5;
+    position: fixed;
+    z-index: 200;
+    display: block;
+    background: $cor-fundo;
+    width: 100%;
+    height: inherit;
+    top: inherit;
+    left: 0px;
+    -webkit-transition: all 0.25s cubic-bezier(0.0, 0.0, 0.2, 1);
+    -moz-transition: all 0.25s cubic-bezier(0.0, 0.0, 0.2, 1);
+    -o-transition: all 0.25s cubic-bezier(0.0, 0.0, 0.2, 1);
+    -ms-transition: all 0.25s cubic-bezier(0.0, 0.0, 0.2, 1);
+    transition: all 0.25s cubic-bezier(0.0, 0.0, 0.2, 1);
+}
+
+.modal:before, .modal-locked:before {
+    content: "";
+    /* opacity: 0.5; */
+    position: fixed;
+    z-index: 200;
+    display: block;
+    background: var(--secondary-color);
+    width: 100%;
+    height: inherit;
+    top: inherit;
+    left: 0px;
+    -webkit-transition: all 0.25s cubic-bezier(0.0, 0.0, 0.2, 1);
+    -moz-transition: all 0.25s cubic-bezier(0.0, 0.0, 0.2, 1);
+    -o-transition: all 0.25s cubic-bezier(0.0, 0.0, 0.2, 1);
+    -ms-transition: all 0.25s cubic-bezier(0.0, 0.0, 0.2, 1);
+    transition: all 0.25s cubic-bezier(0.0, 0.0, 0.2, 1);
+}
+
+.showing {
+    height: 100%;
+    top: 0px;
+}
+
+.modal-content {
+    z-index: 300;
+    background: $cor-fundo;
+    display: flex;
+    flex-flow: row wrap;
+    width: calc( 100% - $padding-minimo * 2);
+    padding: $padding-minimo;
+    margin: auto;
+    box-shadow: 0px 0px $padding-minimo #00000022;
+    border-radius: 6px;
 }

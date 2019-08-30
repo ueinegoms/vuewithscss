@@ -1,7 +1,28 @@
 <template>
-  <div class="home">
-    <h2 class="corForte">Proprietários</h2>
-    <div class="m4 b5 vb6" id="tabela">
+  <div class="home contentVertical">
+    <div style="display: flex; flex-direction: row; align-items: center">
+      <h2 class="corForte" style="display: inline-block">Proprietários</h2>
+      <i class="material-icons successIcon fakeButton" style="margin-left: 16px;">add_circle</i>
+    </div>
+    <div class="contentHorizontal">
+      <div style="width: 75%">
+        <input
+          style="width: calc(100% - 4px)"
+          id="focus"
+          type="text"
+          placeholder="Digite um ID ou Nome"
+          v-model="pesquisa"
+        />
+      </div>
+      <div style="width: 25%; display: flex;">
+        <button
+          style="width: calc(100% - 4px); margin: auto 0px auto auto"
+          type="button"
+          @click="criarQueryPesquisar"
+        >Pesquisar</button>
+      </div>
+    </div>
+    <div id="tabela">
       <table>
         <tr>
           <th
@@ -11,7 +32,18 @@
           >{{itemCabecalho.valor}}</th>
         </tr>
 
-        <router-link
+        <tr
+          v-for="item in itensArray"
+          :key="item.id"
+        >
+          <td style="text-align: center">{{item.id}}</td>
+          <router-link tag="td" :to="'/grower/'+item.id" style="cursor: pointer">
+            <div>{{item.name}}</div>
+          </router-link>
+          <td>{{item.cpf}}</td>
+          <router-link tag="td" :to="'/properties/'+item.id" style="text-align: center"><i class="material-icons successIcon fakeButton">gps_fixed</i></router-link>
+        </tr>
+        <!-- <router-link
           :to="'/properties/'+item.id"
           tag="tr"
           v-for="item in itensArray"
@@ -22,30 +54,29 @@
             <div>{{item.name}}</div>
           </td>
           <td>{{item.cpf}}</td>
-        </router-link>
+        </router-link> -->
       </table>
-      <div>
-        <Paginator
-          @pagina="atualizarPagina"
-          :pagina="pagina"
-          :itensPagina="itensPagina"
-          :totalItens="totalItens"
-          v-if="totalItens != ''"
-        />
-      </div>
+      <Paginator
+        @pagina="atualizarPagina"
+        :pagina="pagina"
+        :itensPagina="itensPagina"
+        :totalItens="totalItens"
+        v-if="totalItens != ''"
+        style="margin: auto 0px auto auto"
+      />
     </div>
   </div>
 </template>
 
 <script>
-import connector from '@/connector.js'
+import connector from "@/connector.js";
 // @ is an alias to /src
 import Paginator from "@/components/Paginator.vue";
 
 export default {
   name: "home",
   components: {
-    Paginator,
+    Paginator
   },
   props: {
     tableContent: {
@@ -57,6 +88,7 @@ export default {
             { id: 0, valor: "#", style: "text-align: center" },
             { id: 1, valor: "Nome", style: "" },
             { id: 2, valor: "CPF", style: "" },
+            { id: 3, valor: "Propriedades", style: "text-align: center" },
           ]
           // conteúdo
           // agora refere à itensArray
@@ -65,91 +97,110 @@ export default {
     }
   },
   data() {
-      return {
-          pagina: 1,
-          itensPagina: 6,
-          totalItens: "",
-          query: "",
-          itensArray: [],
-          pesquisa: "",
-          pesquisaTexto: true,
-          // checkbox: {pesquisarInativo: false},
-      };
+    return {
+      pagina: 1,
+      itensPagina: 6,
+      totalItens: "",
+      query: "",
+      itensArray: [],
+      pesquisa: "",
+      pesquisaTexto: true
+      // checkbox: {pesquisarInativo: false},
+    };
   },
   mounted: function() {
-      this.itensPagina = this.getItensPerPageByWindowSize();
-      if (this.itensPagina < 4){
-          this.itensPagina = 4;
-      }
-      this.mountList();
-      // document.getElementById('focus').focus();
-      // document.getElementById('focus').select();
+    this.itensPagina = this.getItensPerPageByWindowSize();
+    if (this.itensPagina < 4) {
+      this.itensPagina = 4;
+    }
+    this.mountList();
+    document.getElementById("focus").focus();
+    document.getElementById("focus").select();
   },
   methods: {
-    getItensPerPageByWindowSize: function(){
-        let vH = window.innerHeight;           
-        let tabela = document.getElementById('tabela');
-        let hOutros = 0;
-        let pronto = false;
-        let i = 0;
-        while (pronto == false) {
-            if(tabela.parentElement.children[i] == tabela){
-                pronto = true;
-            } else {
-                hOutros += tabela.parentElement.children[i].offsetHeight;
-            }
-            i ++;
-        }
-        
-        // mobile
-        if (window.innerHeight > window.innerWidth){
-            if (window.innerWidth <= 420){
-                return Math.floor((vH-(56+12+hOutros+46+6+6+45+6+56))/46);
-            }
-            return Math.floor((vH-(56+12+hOutros+46+6+6+45+6))/46);
+    getItensPerPageByWindowSize: function() {
+      let vH = window.innerHeight;
+      let tabela = document.getElementById("tabela");
+      let hOutros = 0;
+      let pronto = false;
+      let i = 0;
+      while (pronto == false) {
+        if (tabela.parentElement.children[i] == tabela) {
+          pronto = true;
         } else {
-            // desktop
-            return Math.floor((vH-(56+12+hOutros+46+6+6+45+6))/68);
+          hOutros += tabela.parentElement.children[i].offsetHeight;
         }
+        i++;
+      }
+
+      // mobile
+      if (window.innerHeight > window.innerWidth) {
+        if (window.innerWidth <= 420) {
+          return Math.floor((vH - hOutros) / 40);
+        }
+        return Math.floor((vH - hOutros) / 40);
+      } else {
+        // desktop
+        return Math.floor((vH - hOutros) / 40);
+      }
     },
     mountList: async function() {
-        // const { dispatch } = this.$store;
-        connector.interceptor('https://my-json-server.typicode.com/pedroskakum/fake-api/grower', null, 'GET').then(e => {
+      // const { dispatch } = this.$store;
+      // criaria a query da paginação aqui, já tem a variável página, itens por página e total de itens
+      // inclusive a quantidade de itens por página eu criei uma função que pega o tamanho disponível da view e calcula a quantidade de itens que podem aparecer lá, com o mínimo de 4 itens por página
+      // vide getItensPerPageByWindowSize
+      const { query, pagina, itensPagina } = this;
+
+      this.$emit("loading", true);
+      connector
+        .interceptor(
+          "https://my-json-server.typicode.com/pedroskakum/fake-api/grower" +
+            this.query,
+          null,
+          "GET"
+        )
+        .then(e => {
           this.itensArray = e;
           this.totalItens = e.length;
-          this.$emit('loading', false);
+          this.$emit("loading", false);
         });
-        const { query, pagina, itensPagina } = this;
-        this.$emit('loading', true);
     },
-    atualizarPagina: function(e){
-        this.pagina = e;
+    atualizarPagina: function(e) {
+      this.pagina = e;
     },
-    searchHasChanged: function(val){
-        if (isNaN(parseInt(val))){
-            // se for texto
-            console.log('TEXTO');
-            this.pesquisaTexto = true;
-            } else {
-            // se for número
-            console.log('NÚMERO');
-            this.pesquisaTexto = false;
-        }
+    searchHasChanged: function(val) {
+      if (isNaN(parseInt(val))) {
+        // se for texto
+        console.log("TEXTO");
+        this.pesquisaTexto = true;
+      } else {
+        // se for número
+        console.log("NÚMERO");
+        this.pesquisaTexto = false;
+      }
     },
-    criarQueryPesquisar: function(){
-        let actualQuery = new URLSearchParams();
-        if (this.pesquisaTexto){
-            actualQuery.append('nome', this.pesquisa);
-        } else {
-            actualQuery.append('id', this.pesquisa);
-        }
-        if (this.checkbox['pesquisarInativo'] == true){
-            actualQuery.append('exibir-inativos', 'on');
-        }
-        this.query = `&${actualQuery}`;
-        this.pagina = 1;
-        this.mountList();
+    criarQueryPesquisar: function() {
+      let actualQuery = new URLSearchParams();
+      if (this.pesquisaTexto) {
+        actualQuery.append("name", this.pesquisa);
+      } else {
+        actualQuery.append("id", this.pesquisa);
+      }
+      this.query = `?${actualQuery}`;
+      if (this.pesquisa == "") {
+        this.query = "";
+      }
+      this.pagina = 1;
+      this.mountList();
+    }
+  },
+  watch: {
+    pagina: function() {
+      this.mountList();
     },
+    pesquisa: function(val) {
+      this.searchHasChanged(val);
+    }
   }
 };
 </script>

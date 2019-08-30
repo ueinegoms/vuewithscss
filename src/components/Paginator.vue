@@ -1,11 +1,11 @@
 <template>
     <div id="paginator">
         <!-- {{ pagina }} {{ itensPagina }} {{ totalItens }} -->
-        <button class="marginl0 marginr0 paginatorEl" type="button" @click="firstPage">1</button>
-        <button class="marginl0 marginr0 paginatorEl" type="button" @click="previousPage"><</button>
+        <button class="paginatorEl borderRadiusL" type="button" @click="firstPage">1</button>
+        <button class="paginatorEl" type="button" @click="previousPage"><</button>
         <input class="paginatorEl" v-model="pagina" style="text-align: center; border-radius: 0px;">
-        <button class="marginl0 marginr0 paginatorEl" type="button" @click="nextPage">></button>
-        <button class="marginl0 marginr0 paginatorEl" type="button" @click="lastPage">{{ totalPaginas }}</button>
+        <button class="paginatorEl" type="button" @click="nextPage">></button>
+        <button class="paginatorEl borderRadiusR" type="button" @click="lastPage">{{ totalPaginas }}</button>
     </div>
 </template>
 
@@ -52,11 +52,12 @@ export default {
     margin: auto 0px auto auto;
 }
 .paginatorEl{
-    width: 45px;
-    height: 45px;
+    width: 40px;
+    height: 40px;
     font-size: 12px;
     /* padding: auto;
     margin: auto;
     box-sizing: border-box; */
+    border-radius: 0px;
 }
 </style>

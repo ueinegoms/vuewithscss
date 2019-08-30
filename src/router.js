@@ -20,8 +20,16 @@ export default new Router({
       component: () => import(/* webpackChunkName: "about" */ './views/Properties.vue')
     },
     {
-      path: '/properties/:id',
-      name: 'properties-id',
+      path: '/properties/:grower',
+      name: 'properties-params',
+      // route level code-splitting
+      // this generates a separate chunk (about.[hash].js) for this route
+      // which is lazy-loaded when the route is visited.
+      component: () => import(/* webpackChunkName: "about" */ './views/Properties.vue')
+    },
+    {
+      path: '/properties/:grower/:prop',
+      name: 'properties-params',
       // route level code-splitting
       // this generates a separate chunk (about.[hash].js) for this route
       // which is lazy-loaded when the route is visited.
