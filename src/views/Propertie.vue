@@ -19,7 +19,7 @@
       >remove_circle</i>
     </div>
     <div class="contentHorizontal" style="margin-bottom: 8px;">
-      <div style="width: 75%">
+      <div style="width: 75%" class="margin-bt" >
         <input
           style="width: calc(100% - 4px)"
           id="focus"
@@ -41,7 +41,7 @@
           placeholder="Nome"
           v-model="body.name"
         />-->
-        <select v-model="body.growerId" style="width: calc(100% - 4px)">
+        <select v-model="body.growerId" style="width: calc(100% - 4px)" class="margin-bt">
           <option v-for="grower in growerArray" :value="grower.id" :key="grower.id">{{grower.name}}</option>
           <!-- <option value="1">Amigavel</option> -->
         </select>

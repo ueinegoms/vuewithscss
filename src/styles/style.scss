@@ -110,6 +110,69 @@ input, button, select, option {
     border-radius: 0px $padding-minimo $padding-minimo 0px;
 }
 
+@include for-phone {
+    #table{
+        height: fit-content;
+        width: 100%;
+        overflow: hidden;
+        overflow-x: scroll;
+        margin: 16px 0px 16px 0px;
+    }
+    table{
+        border-collapse: collapse;
+        // white-space: nowrap;
+        width: fit-content;
+        // margin-top: $padding-minimo;
+        // margin-bottom: $padding-minimo;
+        table-layout: auto !important;
+        td{
+            word-wrap: break-word;         /* All browsers since IE 5.5+ */
+            overflow-wrap: break-word;     /* Renamed property in CSS3 draft spec */
+        }
+    }
+    
+    button{
+        margin:0px !important;
+    }
+    .margin-bt{
+        margin-bottom: 8px;
+    }
+    .dontShow{
+        display: none !important;
+    }
+    .home{
+        .contentHorizontal{
+            flex-direction: column;
+            div{
+                width: 100% !important;
+            }
+        }
+    }
+}
+@include for-tablet {
+    button{
+        margin:0px !important;
+    }
+    .margin-bt{
+        margin-bottom: 8px;
+    }
+    .margin-l{
+        margin-left: 0px !important;
+    }
+    .dontShow{
+        display: none !important;
+    }
+    .home{
+        .contentHorizontal{
+            flex-direction: column;
+            div{
+                width: 100% !important;
+                margin-left: 0px !important;
+            }
+        }
+    }
+}
+
 #app {
   margin: auto;
   display: flex;

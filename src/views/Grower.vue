@@ -19,7 +19,7 @@
       >remove_circle</i>
     </div>
     <div class="contentHorizontal">
-      <div style="width: 75%">
+      <div style="width: 75%" class="margin-bt">
         <input
           style="width: calc(100% - 4px)"
           id="focus"
