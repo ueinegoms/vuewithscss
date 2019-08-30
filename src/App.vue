@@ -65,7 +65,7 @@ export default {
   #fetchResponses{
     display: block;
     background: #000;
-    height: 56px;
+    height: fit-content;
     width: 100%;
   }
 </style>

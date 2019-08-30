@@ -12,6 +12,16 @@ export default new Router({
       component: Home
     },
     {
+      path: '/grower/:id',
+      name: 'grower-id',
+      component: () => import(/* webpackChunkName: "about" */ './views/Grower.vue')
+    },
+    {
+      path: '/grower',
+      name: 'grower',
+      component: () => import(/* webpackChunkName: "about" */ './views/Grower.vue')
+    },
+    {
       path: '/properties',
       name: 'properties',
       // route level code-splitting
@@ -28,12 +38,20 @@ export default new Router({
       component: () => import(/* webpackChunkName: "about" */ './views/Properties.vue')
     },
     {
-      path: '/properties/:grower/:prop',
-      name: 'properties-params',
+      path: '/propertie/:prop',
+      name: 'propertie-forms',
       // route level code-splitting
       // this generates a separate chunk (about.[hash].js) for this route
       // which is lazy-loaded when the route is visited.
       component: () => import(/* webpackChunkName: "about" */ './views/Properties.vue')
-    }
+    },
+    {
+      path: '/propertie',
+      name: 'propertie',
+      // route level code-splitting
+      // this generates a separate chunk (about.[hash].js) for this route
+      // which is lazy-loaded when the route is visited.
+      component: () => import(/* webpackChunkName: "about" */ './views/Properties.vue')
+    },
   ]
 })

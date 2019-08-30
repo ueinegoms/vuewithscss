@@ -2,7 +2,8 @@
   <div class="home contentVertical">
     <div style="display: flex; flex-direction: row; align-items: center">
       <h2 class="corForte" style="display: inline-block">Proprietários</h2>
-      <i class="material-icons successIcon fakeButton" style="margin-left: 16px;">add_circle</i>
+      <!-- <i class="material-icons successIcon fakeButton" style="margin-left: 16px;">add_circle</i> -->
+      <router-link tag="i" to="/grower" class="material-icons successIcon fakeButton" style="margin-left: 16px">add_circle</router-link>
     </div>
     <div class="contentHorizontal">
       <div style="width: 75%">
