@@ -1,9 +1,141 @@
-$font-stack:    Helvetica, sans-serif;
-$primary-color: #333;
-$background-color: #333;
+// fontes
+$fonte-primaria: Helvetica, sans-serif;
+
+// cores
+$cor-fundo: #29081e;
+$cor-texto-leve: #a3889f;
+$cor-texto-forte: #fff;
+$cor-borda: #8a194a;
+$cor-menu-ativo: #85ff8c;
+
+// margins and paddings
+$padding-minimo: 12px;
+
+@mixin for-phone {
+  @media (max-width: 420px) and (orientation: portrait) {
+    @content;
+  }
+}
+@mixin for-tablet {
+  @media (min-width: 421px) and (orientation: portrait) {
+    @content;
+  }
+}
+@mixin for-desktop-small {
+  @media (max-width: 1024px) and (orientation: landscape) {
+    @content;
+  }
+}
+@mixin for-desktop {
+  @media (min-width: 1025px) and (orientation: landscape) {
+    @content;
+  }
+}
+
+* {
+  box-sizing: border-box;
+}
 
 body {
-  font: 100% $font-stack;
-  color: $primary-color;
-  background: $background-color;
+  margin: 0px;
+  padding: 0px;
+  font: 14px $fonte-primaria;
+  color: $cor-texto-leve;
+  background: $cor-fundo;
+  display: flex;
+  align-content: center;
+  align-items: center;
+}
+
+#app {
+  margin: auto;
+  display: flex;
+  height: 100vh;
+
+  @include for-phone {
+  }
+  @include for-tablet {
+  }
+  @include for-desktop-small {
+    flex-direction: row;
+  }
+  @include for-desktop {
+    flex-direction: row;
+  }
+}
+
+#nav {
+  border-width: 1px;
+  border-style: none solid none solid;
+  border-color: $cor-borda;
+  padding-top: 16px;
+
+  // padding: $padding-minimo;
+
+  .navLink {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    // color: $cor-texto-forte;
+    cursor: pointer;
+    width: 100%;
+    // border-width: 1px;
+    // border-style: solid none solid none;
+    // border-color: $cor-borda;
+    padding: $padding-minimo;
+    margin: 0px 0px $padding-minimo 0px;
+    transition: all 0.25s ease;
+    &:hover {
+        color: $cor-texto-forte;
+        background: $cor-borda;
+        border-left-style: solid;
+        border-left-width: 4px;
+        border-left-color: $cor-menu-ativo;
+    }
+    .navIcon{
+        padding-right: $padding-minimo;
+    }
+  }
+
+  .navAtivo {
+    border-left-style: solid;
+    border-left-width: 4px;
+    border-left-color: $cor-menu-ativo;
+    color: $cor-texto-forte;
+  }
+
+  @include for-phone {
+  }
+  @include for-tablet {
+  }
+  @include for-desktop-small {
+    width: 200px;
+    display: flex;
+    flex-direction: column;
+  }
+  @include for-desktop {
+    width: 200px;
+    display: flex;
+    flex-direction: column;
+  }
+}
+
+#content {
+  padding: 16px;
+
+  @include for-phone {
+  }
+  @include for-tablet {
+  }
+  @include for-desktop-small {
+    width: calc(100vw - 200px);
+  }
+  @include for-desktop {
+    width: 824px;
+  }
+}
+
+// Utilitários
+.corForte {
+    color: $cor-texto-forte;
 }
