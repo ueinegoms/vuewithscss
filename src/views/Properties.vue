@@ -2,7 +2,12 @@
   <div class="home contentVertical">
     <div style="display: flex; flex-direction: row; align-items: center">
       <h2 class="corForte" style="display: inline-block">Propriedades</h2>
-      <i class="material-icons successIcon fakeButton" style="margin-left: 16px;">add_circle</i>
+      <router-link
+        tag="i"
+        to="/propertie"
+        class="material-icons successIcon fakeButton"
+        style="margin-left: 16px"
+      >add_circle</router-link>
     </div>
     <div class="contentHorizontal">
       <div style="width: 75%">
@@ -22,7 +27,7 @@
         >Pesquisar</button>
       </div>
     </div>
-    <div id="tabela">
+    <div id="tabela" style="height: fit-content; overflow: hidden; overflow-y: scroll; margin: 16px 0px 16px 0px;">
       <table>
         <tr>
           <th
@@ -32,18 +37,18 @@
           >{{itemCabecalho.valor}}</th>
         </tr>
 
-        <tr
-          v-for="item in itensArray"
-          :key="item.id"
-        >
+        <tr v-for="item in itensArray" :key="item.id">
           <td style="text-align: center">{{item.id}}</td>
           <td>{{item.name}}</td>
           <td>{{item.total_area}}</td>
           <td>{{item.city}}</td>
-          <td>{{item.growerId}}</td>
+          <td style="word-wrap: break-word">{{getGrowerNamePerId(item.growerId)}}</td>
           <td style="text-align: center">
-            <router-link tag="i" :to="'/grower/'+item.id" class="material-icons successIcon fakeButton" style="margin-right: 8px">edit</router-link>
-            <router-link tag="i" :to="'/properties/'+item.id" class="material-icons successIcon fakeButton">gps_fixed</router-link>
+            <router-link
+              tag="i"
+              :to="'/propertie/'+item.id"
+              class="material-icons successIcon fakeButton"
+            >edit</router-link>
           </td>
         </tr>
         <!-- <router-link
@@ -57,17 +62,17 @@
             <div>{{item.name}}</div>
           </td>
           <td>{{item.cpf}}</td>
-        </router-link> -->
+        </router-link>-->
       </table>
-      <Paginator
-        @pagina="atualizarPagina"
-        :pagina="pagina"
-        :itensPagina="itensPagina"
-        :totalItens="totalItens"
-        v-if="totalItens != ''"
-        style="margin: auto 0px auto auto"
-      />
     </div>
+    <Paginator
+      @pagina="atualizarPagina"
+      :pagina="pagina"
+      :itensPagina="itensPagina"
+      :totalItens="totalItens"
+      v-if="totalItens != ''"
+      style="margin: 0px 0px auto auto"
+    />
   </div>
 </template>
 
@@ -93,7 +98,7 @@ export default {
             { id: 2, valor: "Área Total", style: "" },
             { id: 3, valor: "Cidade", style: "" },
             { id: 4, valor: "Proprietário", style: "" },
-            { id: 5, valor: "Propriedades", style: "text-align: center" },
+            { id: 5, valor: "Propriedades", style: "text-align: center" }
           ]
           // conteúdo
           // agora refere à itensArray
@@ -108,6 +113,7 @@ export default {
       totalItens: "",
       query: "",
       itensArray: [],
+      growerArray: [],
       pesquisa: "",
       pesquisaTexto: true
       // checkbox: {pesquisarInativo: false},
@@ -123,6 +129,14 @@ export default {
     document.getElementById("focus").select();
   },
   methods: {
+    getGrowerNamePerId: function(id) {
+      for (let i = 0; i < this.growerArray.length; i++) {
+        if (this.growerArray[i].id == id) {
+          return this.growerArray[i].name;
+        }
+      }
+      return " ~ ";
+    },
     getItensPerPageByWindowSize: function() {
       let vH = window.innerHeight;
       let tabela = document.getElementById("tabela");
@@ -150,23 +164,48 @@ export default {
       }
     },
     mountList: async function() {
+      this.$emit("loading", true);
       // const { dispatch } = this.$store;
       // criaria a query da paginação aqui, já tem a variável página, itens por página e total de itens
       // inclusive a quantidade de itens por página eu criei uma função que pega o tamanho disponível da view e calcula a quantidade de itens que podem aparecer lá, com o mínimo de 4 itens por página
       // vide getItensPerPageByWindowSize
       // const { query, pagina, itensPagina } = this;
-      if(this.$route.params.grower != undefined){
+
+      this.$emit(
+        "consoleResponse",
+        "https://my-json-server.typicode.com/pedroskakum/fake-api/grower[GET]>"
+      );
+      connector
+        .interceptor(
+          "https://my-json-server.typicode.com/pedroskakum/fake-api/grower",
+          null,
+          "GET"
+        )
+        .then(e => {
+          this.growerArray = e;
+          this.$emit(
+            "consoleResponse",
+            "https://my-json-server.typicode.com/pedroskakum/fake-api/grower[GET]>" +
+              e
+          );
+        });
+
+      if (this.$route.params.grower != undefined) {
         let actualQuery = new URLSearchParams();
-        actualQuery.append('growerId', this.$route.params.grower);
-        if (this.query == ''){
-          this.query = '?' + actualQuery;
+        actualQuery.append("growerId", this.$route.params.grower);
+        if (this.query == "") {
+          this.query = "?" + actualQuery;
         } else {
           this.query += actualQuery;
         }
       }
 
-      this.$emit("loading", true);
-      this.$emit("consoleResponse", "https://my-json-server.typicode.com/pedroskakum/fake-api/properties" + this.query + "[GET]>")
+      this.$emit(
+        "consoleResponse",
+        "https://my-json-server.typicode.com/pedroskakum/fake-api/properties" +
+          this.query +
+          "[GET]>"
+      );
       connector
         .interceptor(
           "https://my-json-server.typicode.com/pedroskakum/fake-api/properties" +
@@ -177,7 +216,13 @@ export default {
         .then(e => {
           this.itensArray = e;
           this.totalItens = e.length;
-          this.$emit("consoleResponse", "https://my-json-server.typicode.com/pedroskakum/fake-api/properties" + this.query + "[GET]>" + e);
+          this.$emit(
+            "consoleResponse",
+            "https://my-json-server.typicode.com/pedroskakum/fake-api/properties" +
+              this.query +
+              "[GET]>" +
+              e
+          );
           this.$emit("loading", false);
         });
     },
@@ -217,9 +262,9 @@ export default {
     pesquisa: function(val) {
       this.searchHasChanged(val);
     },
-    '$route' () {
-        this.query = '';
-        this.mountList();
+    $route() {
+      this.query = "";
+      this.mountList();
     }
   }
 };

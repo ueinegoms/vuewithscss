@@ -3,7 +3,12 @@
     <div style="display: flex; flex-direction: row; align-items: center">
       <h2 class="corForte" style="display: inline-block">Proprietários</h2>
       <!-- <i class="material-icons successIcon fakeButton" style="margin-left: 16px;">add_circle</i> -->
-      <router-link tag="i" to="/grower" class="material-icons successIcon fakeButton" style="margin-left: 16px">add_circle</router-link>
+      <router-link
+        tag="i"
+        to="/grower"
+        class="material-icons successIcon fakeButton"
+        style="margin-left: 16px"
+      >add_circle</router-link>
     </div>
     <div class="contentHorizontal">
       <div style="width: 75%">
@@ -23,7 +28,10 @@
         >Pesquisar</button>
       </div>
     </div>
-    <div id="tabela">
+    <div
+      id="tabela"
+      style="height: fit-content; overflow: hidden; overflow-y: scroll; margin: 16px 0px 16px 0px;"
+    >
       <table>
         <tr>
           <th
@@ -33,16 +41,22 @@
           >{{itemCabecalho.valor}}</th>
         </tr>
 
-        <tr
-          v-for="item in itensArray"
-          :key="item.id"
-        >
+        <tr v-for="item in itensArray" :key="item.id">
           <td style="text-align: center">{{item.id}}</td>
           <td>{{item.name}}</td>
           <td style="text-align: center">{{item.cpf}}</td>
           <td style="text-align: center">
-            <router-link tag="i" :to="'/grower/'+item.id" class="material-icons successIcon fakeButton" style="margin-right: 8px">edit</router-link>
-            <router-link tag="i" :to="'/properties/'+item.id" class="material-icons successIcon fakeButton">gps_fixed</router-link>
+            <router-link
+              tag="i"
+              :to="'/grower/'+item.id"
+              class="material-icons successIcon fakeButton"
+              style="margin-right: 8px"
+            >edit</router-link>
+            <router-link
+              tag="i"
+              :to="'/properties/'+item.id"
+              class="material-icons successIcon fakeButton"
+            >gps_fixed</router-link>
           </td>
         </tr>
         <!-- <router-link
@@ -56,17 +70,17 @@
             <div>{{item.name}}</div>
           </td>
           <td>{{item.cpf}}</td>
-        </router-link> -->
+        </router-link>-->
       </table>
-      <Paginator
-        @pagina="atualizarPagina"
-        :pagina="pagina"
-        :itensPagina="itensPagina"
-        :totalItens="totalItens"
-        v-if="totalItens != ''"
-        style="margin: auto 0px auto auto"
-      />
     </div>
+    <Paginator
+      @pagina="atualizarPagina"
+      :pagina="pagina"
+      :itensPagina="itensPagina"
+      :totalItens="totalItens"
+      v-if="totalItens != ''"
+      style="margin: 0px 0px auto auto"
+    />
   </div>
 </template>
 
@@ -90,7 +104,7 @@ export default {
             { id: 0, valor: "#", style: "text-align: center" },
             { id: 1, valor: "Nome", style: "" },
             { id: 2, valor: "CPF", style: "text-align: center" },
-            { id: 3, valor: "Propriedades", style: "text-align: center" },
+            { id: 3, valor: "Propriedades", style: "text-align: center" }
           ]
           // conteúdo
           // agora refere à itensArray
@@ -154,7 +168,12 @@ export default {
       const { query, pagina, itensPagina } = this;
 
       this.$emit("loading", true);
-      this.$emit("consoleResponse", "https://my-json-server.typicode.com/pedroskakum/fake-api/grower" + this.query + "[GET]>")
+      this.$emit(
+        "consoleResponse",
+        "https://my-json-server.typicode.com/pedroskakum/fake-api/grower" +
+          this.query +
+          "[GET]>"
+      );
       connector
         .interceptor(
           "https://my-json-server.typicode.com/pedroskakum/fake-api/grower" +
@@ -165,7 +184,13 @@ export default {
         .then(e => {
           this.itensArray = e;
           this.totalItens = e.length;
-          this.$emit("consoleResponse", "https://my-json-server.typicode.com/pedroskakum/fake-api/grower" + this.query + "[GET]>" + e);
+          this.$emit(
+            "consoleResponse",
+            "https://my-json-server.typicode.com/pedroskakum/fake-api/grower" +
+              this.query +
+              "[GET]>" +
+              e
+          );
           this.$emit("loading", false);
         });
     },

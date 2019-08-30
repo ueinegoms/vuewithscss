@@ -1,7 +1,7 @@
 <template>
   <div id="app">
     <div id="fetchResponses">{{consoleReads}}</div>
-    <div class="contentHorizontal" style="width: fit-content; margin: 0px auto auto auto; height: 100%;">
+    <div class="contentHorizontal" style="width: fit-content; margin: 0px auto auto auto; min-height: 100%; height: fit-content;">
       <div id="nav">
         <router-link :class="$route.path == '/' || checkForRoute('/grower') ? 'navLink navAtivo' : 'navLink'" tag="span" to="/"><i class="material-icons navIcon">people</i> <span>Proprietários</span></router-link>
         <router-link :class="checkForRoute('/properties') ? 'navLink navAtivo' : 'navLink'" tag="span" to="/properties"><i class="material-icons navIcon">gps_fixed</i> <span>Propriedades</span></router-link>

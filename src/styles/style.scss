@@ -49,10 +49,15 @@ body {
 
 table {
     border-collapse: collapse;
-    white-space: nowrap;
+    // white-space: nowrap;
     width: 100%;
-    margin-top: $padding-minimo;
-    margin-bottom: $padding-minimo;
+    // margin-top: $padding-minimo;
+    // margin-bottom: $padding-minimo;
+    table-layout: fixed;
+    td{
+        word-wrap: break-word;         /* All browsers since IE 5.5+ */
+        overflow-wrap: break-word;     /* Renamed property in CSS3 draft spec */
+    }
 }
 
 th {
@@ -75,7 +80,7 @@ tr{
     }
 }
 
-input, button {
+input, button, select, option {
     background: $cor-fundo;
     height: 40px;
     border-style: solid;
@@ -293,9 +298,23 @@ input, button {
     background: $cor-fundo;
     display: flex;
     flex-flow: row wrap;
-    width: calc( 100% - $padding-minimo * 2);
+    width: calc(100% - var($padding-minimo) * 2);
     padding: $padding-minimo;
     margin: auto;
     box-shadow: 0px 0px $padding-minimo #00000022;
     border-radius: 6px;
+}
+
+/* scrollbar */
+*::-webkit-scrollbar {
+    width: 4px;
+}
+ 
+*::-webkit-scrollbar-track {
+    /* -webkit-box-shadow: inset 0 0 6px rgba(0,0,0,0.3); */
+}
+ 
+*::-webkit-scrollbar-thumb {
+  background-color: $cor-borda;
+  /* outline: 1px solid slategrey; */
 }
